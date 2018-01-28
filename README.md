@@ -1,0 +1,2 @@
+# COSC2436-C-
+COSC2436 C++ Spring 2018
