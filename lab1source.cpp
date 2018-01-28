@@ -55,30 +55,31 @@ int main()
 	
 
 
-	//------------------------------------FUNCTION CALLS
 	
-	while (again == 1)
+	
+	while (again == 1)  //------------RUN MULTIPLE TIMES
 	{
 		system("CLS");
- 
-	askUser(base, power);
-	cout << "The total is : " << dpower(base, power) << endl;
+
+		 //------------------------------------FUNCTION CALLS
+		askUser(base, power);
+		cout << "The total is : " << dpower(base, power) << endl;
+		//cout << "The number " << base << " raised to the power of " << power << " equals : " << dpower(base, power) << endl;
 
 
-
-	//-----------------------------------------ASK TO RUN AGAIN
-	cout << "\n Would like to try again ? (Type 1 for YES or 2 For NO) : ";
-	cin >> again;
-	//-------------CHECK IF INPUT IS VALID
-	while (again < 1 || again > 2 || cin.fail())
-	{
-		cout << "\nPlease check your entry. What you entered is not a valid." << endl;
+		//-----------------------------------------ASK TO RUN AGAIN
 		cout << "\n Would like to try again ? (Type 1 for YES or 2 For NO) : ";
-		cin.clear();
-		cin.ignore(2000, '\n');
 		cin >> again;
-	}
-	//-----------------------------------------ASK TO RUN AGAIN
+		//-------------CHECK IF INPUT IS VALID
+		while (again < 1 || again > 2 || cin.fail())
+			{
+			cout << "\nPlease check your entry. What you entered is not a valid." << endl;
+			cout << "\n Would like to try again ? (Type 1 for YES or 2 For NO) : ";
+			cin.clear();
+			cin.ignore(2000, '\n');
+			cin >> again;
+			}
+		//-----------------------------------------ASK TO RUN AGAIN
 
 
 	}
@@ -89,7 +90,7 @@ int main()
 
 
 
-	system("pause");
+	//system("pause");
 
 	return 0;
 
