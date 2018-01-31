@@ -45,8 +45,16 @@ double powerMath(double, int, double, int);
 void askUserStarLoop(int&);
 void starsLoop(int);
 void askUserStarRecursion(int&);
-int starsRecursion(int, int);
-
+void starsRecursionCol(int);
+void starsRecursionRow(int);
+//---TASK 3
+void askUserPalindrome();
+bool checkPalindrome(string);
+//---TASK 4
+void askUserFib1();
+int fib1Recursion(int);
+void askUserFib2();
+int fib2Iterative(int);
 
 
 
@@ -73,7 +81,7 @@ int main()
 
 	while (runAgain)
 	{
-		
+
 		userMenu(menu);
 
 		//----------------Menu Option 0 (Exit)
@@ -96,78 +104,37 @@ int main()
 			askUserStarLoop(rows); //--------ask user stars in loop
 		}
 		//-------------------------------------------------
-		
-		//----------------Menu Option 2 (STARS IN LOOP)
+
+
+		//----------------Menu Option 3 (STARS RECURSIVE)
 		if (menu == 3)
 		{
-			askUserStarRecursion(rows); //--------ask user stars in loop
+			askUserStarRecursion(rows); //--------ask user stars recursive
+		}
+		//-------------------------------------------------
+
+		//----------------Menu Option 4 (Palindrome Check)
+		if (menu == 4)
+		{
+			askUserPalindrome(); //--------ask user Palindrome
+		}
+		//-------------------------------------------------
+
+		//----------------Menu Option 5 (FIBONACCI RECURSIVE)
+		if (menu == 5)
+		{
+			askUserFib1(); //--------ask user FIBONACCI
+		}
+		//-------------------------------------------------
+
+		//----------------Menu Option 6 (FIBONACCI ITERATIVE)
+		if (menu == 6)
+		{
+			askUserFib2(); //--------ask user FIBONACCI ITERATIVE
 		}
 		//-------------------------------------------------
 
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	/*
-
-	askUserStarRecursion(rows);
-	
-
-
-
-	
-
-
-
-	while (again == 1)  //------------RUN MULTIPLE TIMES
-	{
-		system("CLS");
-
-		//----------------------------------------------------------------FUNCTION CALLS
-
-		askUser(base, power); //-------- USERINTERFACE
-
-		
-
-
-		//-----------------------------------------ASK TO RUN AGAIN
-		cout << "\n Would like to try again ? (Type 1 for YES or 2 For NO) : ";
-		cin >> again;
-		//-------------CHECK IF INPUT IS VALID
-		while (again < 1 || again > 2 || cin.fail())
-		{
-			cout << "\nPlease check your entry. What you entered is not a valid." << endl;
-			cout << "\n Would like to try again ? (Type 1 for YES or 2 For NO) : ";
-			cin.clear();
-			cin.ignore(2000, '\n');
-			cin >> again;
-		}
-		//-----------------------------------------END ASK TO RUN AGAIN
-
-
-	}
-
-
-*/
-
-
 
 	return 0;
 
@@ -179,18 +146,22 @@ int main()
 //====================================================USER MENU------------------------
 void userMenu(int& menu)
 {
+	system("CLS");
 
-	int menusize = 5;
+	int menusize = 6;
 
 
 	cout << "--------------------------Option MENU--------------------------" << endl;
 	cout << endl;
 	cout << "               (1) Power a Number" << endl;
-	cout << "               (2) Stars in Loop" << endl;
 	cout << endl;
-	cout << "               (3) Stars in Recursion" << endl;
-	cout << "               (4) *********" << endl;
-	cout << "               (5) *********" << endl;
+	cout << "               (2) Stars Iterative" << endl;
+	cout << "               (3) Stars Recursive" << endl;
+	cout << endl;
+	cout << "               (4) Palindrome Check" << endl;
+	cout << endl;
+	cout << "               (5) Fibonacci Recursive" << endl;
+	cout << "               (6) Fibonacci Iterative" << endl;
 	cout << endl;
 	cout << "               (0) Exit Program" << endl;
 	cout << "               (99) Display Option Menu" << endl;
@@ -247,7 +218,7 @@ void askUser(double& base, int& power)
 	cin >> power;
 
 	//-------------CHECK IF INPUT IS VALID
-	while (power < 0 || cin.fail())
+	while (cin.fail())
 	{
 		cout << "\nPlease check your entry. What you entered is not a positive whole number." << endl;
 		cout << "You must enter any positive whole number." << endl;
@@ -277,7 +248,7 @@ void askUser(double& base, int& power)
 
 	/*
 
-	
+
 	while (again == 1)  //------------RUN MULTIPLE TIMES
 	{
 	system("CLS");
@@ -331,10 +302,22 @@ double dpower(double base, int power)
 	if (power == 1)
 		return base;
 
+	if (power < 0)
+	{
+		power = -power;
+		return 1 / (base * dpower(base, power - 1));
+	}
+
+	if (power > 0)
+		return base * dpower(base, power - 1);
+
+
+
+	/*
 	int times = 2;
 	double total = base * base;
 	return powerMath(base, power, total, times);
-
+	*/
 }
 //****************************************************END POWER FUNCTION--------------------
 
@@ -364,7 +347,7 @@ void askUserStarLoop(int& rows)
 
 	cout << "Please enter your rows number:";
 	cin >> rows;
-	
+
 
 	//-------------CHECK IF INPUT IS VALID
 	while (rows < 0 || cin.fail())
@@ -396,8 +379,8 @@ void starsLoop(int rows)
 {
 	int i = rows;
 
-	
-	
+
+
 	for (i; i > 0; --i)
 	{
 		for (int j = i; j > 0; --j)
@@ -416,6 +399,8 @@ void starsLoop(int rows)
 //====================================================USER INTERFACE STAR RECURSION------------------------
 void askUserStarRecursion(int& rows)
 {
+	system("CLS");
+
 	int col = 0;
 
 	cout << "Please enter your rows number:";
@@ -434,8 +419,10 @@ void askUserStarRecursion(int& rows)
 
 	}
 
-	int temp = starsRecursion(rows, col);
-	cout << endl;
+	starsRecursionRow(rows);
+
+	system("pause");
+	system("CLS");
 
 }
 
@@ -444,24 +431,232 @@ void askUserStarRecursion(int& rows)
 
 //====================================================STARS RECURSIVE FUNCTION------------------------
 
-int starsRecursion(int rows, int col)
+void starsRecursionCol(int col)
 {
-	if (rows == 1)
-		return 0;
-	
-	if (col == rows)
+
+	if (col == 0)
 	{
-		--rows;
-		col = 0;
 		cout << endl;
+		return;
 	}
 
 	cout << "*";
-	++col;
-	return starsRecursion(rows, col);
-	
-	
+
+	starsRecursionCol(col - 1);
+
+}
+
+
+void starsRecursionRow(int rows)
+{
+
+	if (rows == 0)
+	{
+		cout << endl;
+		return;
+	}
+
+	starsRecursionCol(rows);
+	starsRecursionRow(rows - 1);
+
 
 }
 
 //****************************************************END STARS RECURSIVE FUNCTION--------------------
+
+
+
+
+
+
+
+//====================================================USER INTERFACE Palindrome------------------------
+void askUserPalindrome()
+{
+	system("CLS");
+
+	string word;
+	bool yesPalindrome = false;
+
+	//-----------------------------------------------------------------------
+	cout << "Please enter your word to check if a Palindrome :";
+	cin >> word;
+	//-----------------------------------------------------------------------
+
+
+	yesPalindrome = checkPalindrome(word);
+
+	if (yesPalindrome)
+	{
+		cout << "The word " << word << " is a Palindrome." << endl;
+	}
+	else
+	{
+		cout << "The word " << word << " is NOT a Palindrome" << endl;
+	}
+
+
+
+
+	system("pause");
+	system("CLS");
+}
+//****************************************************END USER INTERFACE Palindrome--------------------
+
+
+
+//====================================================Palindrome FUNCTION------------------------
+bool checkPalindrome(string word)
+{
+	
+	if (word == string(word.rbegin(), word.rend()))
+	return 1;
+
+
+	return 0;
+
+
+
+	/*
+
+	if (equal(word.begin(), word.begin() + word.size() / 2, word.rbegin()))
+		return 1;
+
+	return 0;
+*/
+
+
+}
+//****************************************************END Palindrome FUNCTION--------------------
+
+
+
+
+
+
+
+
+//====================================================USER INTERFACE FIB1------------------------
+void askUserFib1()
+{
+	system("CLS");
+
+	int fib = 0;
+
+	cout << "Please enter your FIB number:";
+	cin >> fib;
+
+
+	//-------------CHECK IF INPUT IS VALID
+	while (fib < 0 || cin.fail())
+	{
+		cout << "\nPlease check your entry. What you entered is not a valid number." << endl;
+		cout << "You must enter any positive whole number." << endl;
+		cout << "Please enter the number of rows :";
+		cin.clear();
+		cin.ignore(2000, '\n');
+		cin >> fib;
+
+	}
+
+	clock_t start = clock();	//----------------------Start Clock Timer
+
+	cout << "The Fibonacci of " << fib << " is : " << fib1Recursion(fib) << endl;
+
+	clock_t end = clock();		//----------------------End Clock Timer
+
+	cout << "Time elapsed: " << ((double)end - start) / CLOCKS_PER_SEC << endl;   //--------------Display the Time Elapsed
+
+	system("pause");
+	system("CLS");
+}
+//****************************************************END USER INTERFACE FIB2--------------------
+
+
+
+//====================================================FIB1 RECURSIVE FUNCTION------------------------
+int fib1Recursion(int fib)
+{
+
+	if (fib == 0)
+		return 0;
+
+	if (fib == 1)
+		return 1;
+
+	if (fib == 2)
+		return 1;
+
+	return fib1Recursion(fib - 1) + fib1Recursion(fib - 2);
+
+}
+//****************************************************END FIB1 RECURSIVE FUNCTION--------------------
+
+
+
+
+//====================================================USER INTERFACE FIB2 ITERATIVE------------------------
+void askUserFib2()
+{
+	system("CLS");
+
+	int fib = 0;
+
+	cout << "Please enter your FIB number:";
+	cin >> fib;
+
+
+	//-------------CHECK IF INPUT IS VALID
+	while (fib < 0 || cin.fail())
+	{
+		cout << "\nPlease check your entry. What you entered is not a valid number." << endl;
+		cout << "You must enter any positive whole number." << endl;
+		cout << "Please enter the number of rows :";
+		cin.clear();
+		cin.ignore(2000, '\n');
+		cin >> fib;
+
+	}
+
+	clock_t start = clock();	//----------------------Start Clock Timer
+
+	cout << "The Fibonacci of " << fib << " is : " << fib2Iterative(fib) << endl;
+
+	clock_t end = clock();		//----------------------End Clock Timer
+
+	cout << "Time elapsed: " << ((double)end - start) / CLOCKS_PER_SEC << endl;   //--------------Display the Time Elapsed
+
+	system("pause");
+	system("CLS");
+}
+//****************************************************END USER INTERFACE FIB2 ITERATIVE--------------------
+
+
+
+//====================================================FIB2 ITERATIVE FUNCTION------------------------
+int fib2Iterative(int fib)
+{
+	int num1 = 1;
+	int num2 = 1;
+	int num3 = 0;
+
+	if (fib == 0)
+		return 0;
+
+	if (fib == 1)
+		return 1;
+
+	if (fib == 2)
+		return 1;
+
+	for (int i = fib; i > 0; --i)
+	{
+		num2 = num1;
+		num1 = num3;
+		num3 = num1 + num2;
+
+	}
+
+	return num3;
+}
+//****************************************************END FIB2 ITERATIVE FUNCTION--------------------
